@@ -18,7 +18,7 @@ public class AbilityChooser : MonoBehaviour {
 		abilities.Add(new SeeThroughAbility(GameObject.Find ("SecondaryCamera").camera));
 		abilities.Add(new InvisibilityAbility());
 	}
-
+	//hurrrdurrr 
 	void Update() {
 		if(Input.GetMouseButtonDown(0)) {
 			abilities[currentAbility].execute();
