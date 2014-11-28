@@ -33,7 +33,6 @@ public class EnemyNavigation : MonoBehaviour {
 	void Update () {
 		if(alarmController.lastPlayerPosition == alarmController.playerResetPosition) {
 			followPath();
-			Debug.Log("BYTER");
 		} else {
 			chasePlayerAtLastLocation();
 		}

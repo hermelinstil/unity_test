@@ -1,28 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
 
 public class AbilityChooser : MonoBehaviour {
 
-	private string[] abilities;
+	private List<Ability> abilities;
 	private int currentAbility;
 
 	private GUIText gui;
 
 	void Awake() {
-		abilities = new string[5];
+		abilities = new List<Ability>();
 		gui = GameObject.Find ("HUD").GetComponent<GUIText>();
 
-		for(int i = 0; i < abilities.Length; ++i) {
-			abilities[0] = "Ability " + (i + 1);
-		}
+		//hur fan gör man...
+		abilities.Add(new SeeThroughAbility(GameObject.Find ("SecondaryCamera").camera));
+		abilities.Add(new InvisibilityAbility());
 	}
 
 	void Update() {
-		if(Input.GetAxis("Mouse ScrollWheel") > 0) {
-			currentAbility = (currentAbility + 1) % abilities.Length;
-			gui.text = abilities[currentAbility];
-		} else {
-			currentAbility = (currentAbility + 1) % abilities.Length;
+		if(Input.GetMouseButtonDown(0)) {
+			abilities[currentAbility].execute();
 		}
+
+		if(Input.GetAxis("Mouse ScrollWheel") > 0) {
+			currentAbility = (currentAbility + 1) % abilities.Count;
+		} else if(Input.GetAxis("Mouse ScrollWheel") < 0) {
+			if(currentAbility != 0) {
+				currentAbility = (currentAbility - 1) % abilities.Count;
+			}
+		}
+		gui.text = abilities[currentAbility].ToString();
 	}
 }

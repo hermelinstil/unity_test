@@ -17,7 +17,7 @@ public class EnemyPerception : MonoBehaviour {
 	void Awake() {
 		perceptionCollider = GetComponent<SphereCollider>();
 		alarmController = GameObject.FindGameObjectWithTag("GameController").GetComponent<AlarmController>();
-		player = GameObject.Find("Player");
+		player = GameObject.FindGameObjectWithTag("Player");
 
 		lastPlayerPosition = alarmController.lastPlayerPosition;
 		previousSighting = alarmController.playerResetPosition;
@@ -29,6 +29,10 @@ public class EnemyPerception : MonoBehaviour {
 		}
 
 		previousSighting = alarmController.lastPlayerPosition;
+
+		//if(renderer.isVisible) {
+		//	renderer.material.color = Color.red;
+		//}
 	}
 
 	void OnTriggerStay(Collider other) {
@@ -53,6 +57,8 @@ public class EnemyPerception : MonoBehaviour {
 
 						alarmController.playerDetected(player.transform.position, GetHashCode());
 						shoot();
+					} else {
+						OnTriggerExit(player.collider);
 					}
 				}
 			}
